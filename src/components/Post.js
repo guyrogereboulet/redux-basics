@@ -1,17 +1,42 @@
-import React from "react";
-import { useSelector } from "react-redux";
+import React, { useState } from "react";
+import { useDispatch, useSelector } from "react-redux";
+import { editPosts } from "../actions/post.action";
 import Like from "./Like";
 import { isEmpty } from "./Utils";
 
 const Post = ({ post }) => {
+  const [editToggle, setEditToogle] = useState(false);
+  const [editContent, setEditContent] = useState(post.content);
   const user = useSelector((state) => state.userReducer);
+  const dispatch = useDispatch();
+
+  const handleEdit = (e) => {
+    e.preventDefault();
+    const postData = {
+      title: post.title,
+      author: user[0].pseudo,
+      content: editContent,
+      likes: post.likes,
+      id: post.id,
+    };
+    dispatch(editPosts(postData));
+    setEditToogle(false);
+  };
 
   return (
     <div className="post">
       {!isEmpty(user[0]) && user[0].pseudo === post.author && (
         <div className="edit-delete">
-          <img src="./icons/edit.svg" alt="edit" />
-          <img src="./icons/delete.svg" alt="delete" />
+          <img
+            onClick={() => setEditToogle(!editToggle)}
+            src="./icons/edit.svg"
+            alt="edit"
+          />
+          <img
+            src="./icons/delete.svg"
+            alt="delete"
+            onClick={() => dispatch(deletePost(post.id))}
+          />
         </div>
       )}
       <h2>{post.title}</h2>
@@ -20,8 +45,18 @@ const Post = ({ post }) => {
         className="post-img"
         alt="img-post"
       />
-
-      <p>{post.content}</p>
+      {editToggle ? (
+        <form onSubmit={(e) => handleEdit(e)}>
+          <textarea
+            type="text"
+            defaultValue={post.content}
+            onChange={(e) => setEditContent(e.target.value)}
+          />
+          <input type="submit" value="Valider modification" />
+        </form>
+      ) : (
+        <p>{post.content}</p>
+      )}
 
       <div className="author">
         <h5>{post.author}</h5>

@@ -23,15 +23,15 @@
     },
     {
       "title": "Test",
-      "content": "Test",
       "author": "user42",
+      "content": "Prova",
       "likes": 0,
       "id": "QuoihXb"
     },
     {
       "title": "Ciao",
-      "content": "Ciao",
       "author": "user42",
+      "content": "Eccomi",
       "likes": 0,
       "id": "IzqKTIj"
     },
