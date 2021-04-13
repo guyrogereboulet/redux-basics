@@ -1,6 +1,6 @@
 import React, { useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
-import { editPosts } from "../actions/post.action";
+import { deletePosts, editPosts } from "../actions/post.action";
 import Like from "./Like";
 import { isEmpty } from "./Utils";
 
@@ -35,7 +35,7 @@ const Post = ({ post }) => {
           <img
             src="./icons/delete.svg"
             alt="delete"
-            onClick={() => dispatch(deletePost(post.id))}
+            onClick={() => dispatch(deletePosts(post.id))}
           />
         </div>
       )}
