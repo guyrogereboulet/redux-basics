@@ -1,4 +1,5 @@
 import {
+  ADD_LIKE,
   ADD_POSTS,
   DELETE_POSTS,
   EDIT_POSTS,
@@ -26,6 +27,16 @@ export default function postReducer(state = initialState, action) {
 
     case DELETE_POSTS:
       return state.filter((post) => post.id !== action.payload.postId);
+
+    case ADD_LIKE:
+      return state.map((post) => {
+        if (post.id === action.payload.id) {
+          return {
+            ...post,
+            likes: action.payload.likes,
+          };
+        } else return post;
+      });
     default:
       return state;
   }
